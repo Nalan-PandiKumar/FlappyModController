@@ -1,0 +1,54 @@
+struct Player
+{
+    int y;   // alignment 4 
+    int velocity; // alignment 4
+};
+
+default alignment -> 8
+
+offsets:-
+0-3 -> y
+4->7 -> velocity
+size -> 8 bytes => 8 % largest alignment of player is 4 => 0 
+
+struct Pipe
+{
+    int x;  // alignment 4 
+    int gapY;  // alignment 4 
+    int gapSize;  // alignment 4 
+    int width;   // alignment 4 
+    bool passed;  // alignment 1
+};
+
+offsets:-
+0-3 -> x
+4-7 -> gapY
+8-11 -> gapSize
+12-15 -> width
+16 -> passed
+17-19 -> tail padding
+size -> 20 bytes => 20 % largest alignment of player is 4 => 0 
+
+struct Game
+{
+    Player player; // alignment 4 
+
+    Pipe pipes[PIPE_COUNT]; // alignment 4 
+
+    int score; // alignment 4 
+    int pipeSpeed; // alignment 4 
+
+    bool gameOver; // alignment 1
+};
+
+offsets:-
+0-7 -> player
+8-27 -> pipes[0]
+28-47 -> pipes[1]
+48-67 -> pipes[2]
+68-71 -> score
+72-75 -> pipeSpeed
+76 -> gameOver
+77-79 -> tail padding
+
+size -> 80 bytes => 80 % largest alignment of player is 4 => 0 
